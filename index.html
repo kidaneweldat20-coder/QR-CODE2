@@ -87,9 +87,10 @@
             color: #333;
         }
         
+        /* ፕሪንት ክግበር ከሎ ጻዕዳ ባግራውንድ ጥራሕ ንምውጻእ */
         @media print {
             body { background: none; }
-            .ticket-container { box-shadow: none; margin: 0 auto; }
+            .ticket-container { box-shadow: none; margin: 0 auto; border: 2px solid #d4af37 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
         }
     </style>
 </head>
@@ -156,7 +157,7 @@
                 [1,1,1,1,1,1,1,0,1,0,1,1,0,1,1,1,1,0,1,0,0,1,1,1,1,0,0,1,0,0,1]
             ];
 
-            const scale = 10; // 10x scale for crisp 290x290 resolution
+            const scale = 10;
             ctx.fillStyle = '#ffffff';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = '#000000';
@@ -168,6 +169,11 @@
                     }
                 }
             }
+
+            // ባዕሉ ጸኒሑ ቀጥታ ናብ PDF/Print ዝቕይረሉ ዊንዶው ክኸፍት
+            setTimeout(function() {
+                window.print();
+            }, 600);
         };
     </script>
 
