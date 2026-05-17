@@ -3,178 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kingdom Hotel - Booking QR Printable</title>
+    <title>Kingdom Hotel - Booking QR Print</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght=500;700&family=Noto+Ethiopic:wght=400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
+        /* Luxury Royal Theme for Kingdom Hotel */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
             background-color: #f4f4f4;
+            font-family: 'Noto Ethiopic', 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 20px 0;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
         }
-        .ticket-container {
-            width: 500px;
-            background-color: #ffffff;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+
+        .action-container {
+            margin-bottom: 20px;
             text-align: center;
-            border: 2px solid #d4af37; /* Gold accent border */
         }
-        h1 {
-            color: #1a1a1a;
-            font-size: 32px;
-            margin-bottom: 5px;
-            letter-spacing: 2px;
-        }
-        .subtitle {
-            color: #d4af37;
+
+        /* ናይ ዳውንሎድ መጠወቒ ንድፊ */
+        .download-btn {
+            background-color: #c9a84c;
+            color: #0d0d0d;
+            border: none;
+            padding: 14px 35px;
             font-size: 16px;
-            font-style: italic;
-            margin-top: 0;
-            margin-bottom: 30px;
-        }
-        .instruction-tg {
-            font-size: 18px;
             font-weight: bold;
-            color: #333;
-            margin-bottom: 5px;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            font-family: 'Segoe UI', sans-serif;
         }
-        .instruction-en {
+
+        .download-btn:hover {
+            background-color: #e5c263;
+            transform: translateY(-2px);
+        }
+
+        .booking-card {
+            background-color: #0d0d0d;
+            border: 4px solid #c9a84c;
+            padding: 50px 40px;
+            text-align: center;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            color: #f1d37e;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        /* Subtle Luxury Border Effect */
+        .booking-card::before {
+            content: '';
+            position: absolute;
+            top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border: 1px solid #332b16;
+            pointer-events: none;
+        }
+
+        .hotel-brand {
+            font-family: 'Cinzel', 'Noto Ethiopic', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #c9a84c;
+            margin: 0 0 5px 0;
+            letter-spacing: 3px;
+        }
+
+        .hotel-tagline {
+            font-size: 14px;
+            color: #b0a080;
+            margin: 0 0 35px 0;
+            letter-spacing: 1px;
+            font-style: italic;
+        }
+
+        .call-to-action-tg {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffffff;
+            margin: 0 0 8px 0;
+        }
+
+        .call-to-action-en {
             font-size: 16px;
-            color: #666;
-            margin-bottom: 30px;
+            color: #c9a84c;
+            margin: 0 0 25px 0;
+            font-weight: 500;
         }
-        .qr-section {
-            margin: 30px 0;
+
+        .qr-wrapper {
+            background-color: #ffffff;
             padding: 20px;
-            border: 1px dashed #ccc;
             display: inline-block;
-            background-color: #fafafa;
+            border-radius: 4px;
+            border: 3px solid #c9a84c;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
-        #qr-canvas {
-            width: 200px;
-            height: 200px;
+
+        .qr-wrapper img {
+            width: 240px;
+            height: 240px;
             display: block;
         }
+
+        /* Instructions Steps */
         .steps-container {
+            margin: 35px 0;
             text-align: left;
-            max-width: 350px;
-            margin: 0 auto 40px auto;
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
+            padding-left: 20px;
         }
-        .step {
-            font-size: 15px;
-            color: #444;
-            margin-bottom: 10px;
-        }
-        .step:last-child {
-            margin-bottom: 0;
-        }
-        .footer {
-            border-top: 1px solid #eee;
-            padding-top: 20px;
-            font-size: 13px;
-            color: #777;
-            line-height: 1.6;
-        }
-        .footer strong {
-            color: #333;
+
+        .step-item {
+            font-size: 14px;
+            color: #b0a080;
+            margin-bottom: 12px;
+            line-height: 1.4;
         }
         
-        /* ፕሪንት ክግበር ከሎ ጻዕዳ ባግራውንድ ጥራሕ ንምውጻእ */
+        .step-item strong {
+            color: #f1d37e;
+        }
+
+        .footer-info {
+            border-top: 1px solid #332b16;
+            padding-top: 20px;
+            margin-top: 25px;
+            font-size: 12px;
+            color: #888;
+            line-height: 1.6;
+        }
+
+        .footer-info strong {
+            color: #b0a080;
+        }
+
+        /* Print configuration */
         @media print {
-            body { background: none; }
-            .ticket-container { box-shadow: none; margin: 0 auto; border: 2px solid #d4af37 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            body { padding: 0; background: none; }
+            .action-container { display: none; }
+            .booking-card { box-shadow: none; border: 4px solid #c9a84c; margin: 0 auto; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
         }
     </style>
 </head>
 <body>
 
-    <div class="ticket-container">
-        <h1>KINGDOM HOTEL</h1>
-        <div class="subtitle">Luxury & Comfort in the Heart of Mekelle</div>
+    <div class="action-container">
+        <button class="download-btn" onclick="downloadPDF()">📥 DOWNLOAD TICKET (PDF)</button>
+    </div>
 
-        <div class="instruction-tg">ብሞባይልኩም ስካን ብምግባር ብቐጥታ ይተሓዙ</div>
-        <div class="instruction-en">Scan to Book Your Room Instantly</div>
-
-        <div class="qr-section">
-            <canvas id="qr-canvas" width="290" height="290"></canvas>
+    <div class="booking-card" id="ticket">
+        <h1 class="hotel-brand">KINGDOM HOTEL</h1>
+        <p class="hotel-tagline">Luxury & Comfort in the Heart of Mekelle</p>
+        
+        <p class="call-to-action-tg">ብሞባይልኩም ስካን ብምግባር ብቐጥታ ይተሓዙ</p>
+        <p class="call-to-action-en">Scan to Book Your Room Instantly</p>
+        
+        <div class="qr-wrapper">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https%3A%2F%2Fkidaneweldat20-coder.github.io&color=000000&bgcolor=FFFFFF" alt="Kingdom Hotel Booking QR">
         </div>
-
+        
         <div class="steps-container">
-            <div class="step"><strong>Step 1:</strong> Open your Phone Camera or QR Scanner</div>
-            <div class="step"><strong>Step 2:</strong> Point at the QR Code</div>
-            <div class="step"><strong>Step 3:</strong> Click the link to Start Booking</div>
+            <div class="step-item"><strong>Step 1:</strong> Open your Phone Camera or QR Scanner</div>
+            <div class="step-item"><strong>Step 2:</strong> Point at the QR Code</div>
+            <div class="step-item"><strong>Step 3:</strong> Click the link to Start Booking</div>
         </div>
-
-        <div class="footer">
-            Kingdom Hotel | Mekelle, Ethiopia<br>
-            <strong>Contact:</strong> 0911848120 | <strong>Website:</strong> kidaneweldat20-coder.github.io
+        
+        <div class="footer-info">
+            Kingdom Hotel | <strong>Mekelle, Ethiopia</strong><br>
+            Contact: <strong>0911848120</strong> | Website: <strong>kidaneweldat20-coder.github.io</strong>
         </div>
     </div>
 
     <script>
-        // Pure JavaScript Canvas QR Generator for: https://kidaneweldat20-coder.github.io
-        window.onload = function() {
-            const canvas = document.getElementById('qr-canvas');
-            const ctx = canvas.getContext('2d');
+        // ዳውንሎድ ዝገብረሉ ንጹር ፈንክሽን
+        function downloadPDF() {
+            const element = document.getElementById('ticket');
             
-            // 29x29 Pure Accurate QR Matrix for the URL
-            const matrix = [
-                [1,1,1,1,1,1,1,0,0,0,1,0,1,0,0,1,1,1,0,1,0,1,0,0,1,1,1,1,1,1,1],
-                [1,0,0,0,0,0,1,0,1,0,0,0,1,1,0,0,1,0,1,1,0,0,0,0,1,0,0,0,0,0,1],
-                [1,0,1,1,1,0,1,0,1,0,1,1,0,0,1,0,0,1,1,0,1,0,0,0,1,0,1,1,1,0,1],
-                [1,0,1,1,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1,0,1],
-                [1,0,1,1,1,0,1,0,1,0,1,1,1,1,1,0,0,1,1,0,1,1,0,0,1,0,1,1,1,0,1],
-                [1,0,0,0,0,0,1,0,0,0,0,1,0,1,1,1,0,0,0,1,1,0,1,0,1,0,0,0,0,0,1],
-                [1,1,1,1,1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1],
-                [0,0,0,0,0,0,0,0,1,1,0,1,0,1,0,0,0,1,1,0,0,0,1,0,0,0,0,0,0,0,0],
-                [1,0,1,1,1,1,0,0,1,0,1,1,0,1,0,1,1,1,1,0,1,1,0,1,1,1,1,0,1,1,0],
-                [1,1,1,0,0,1,1,0,0,1,1,0,0,1,1,1,0,1,1,1,0,0,1,0,1,1,1,0,0,0,1],
-                [0,0,1,1,0,1,1,1,1,0,0,0,0,0,1,1,0,0,1,1,1,0,0,1,0,1,1,0,1,0,0],
-                [0,1,1,1,0,0,0,1,0,1,1,1,1,0,0,0,1,1,1,1,0,1,1,1,1,0,0,0,0,1,1],
-                [1,1,0,0,1,1,0,0,1,1,1,0,1,0,0,1,0,1,0,0,0,0,1,0,1,1,1,1,0,1,0],
-                [0,0,1,0,0,0,1,1,1,0,1,1,0,0,1,1,0,0,1,1,0,0,0,1,0,0,0,1,0,0,1],
-                [0,1,1,0,0,0,0,0,1,0,0,1,1,1,0,1,1,0,0,0,0,1,1,1,1,0,0,1,0,1,1],
-                [1,0,1,0,0,0,1,0,0,1,0,1,1,1,0,0,1,0,0,1,0,1,1,0,1,1,0,1,1,1,0],
-                [1,1,0,0,0,1,1,1,1,1,1,0,1,0,0,1,1,1,1,0,1,1,0,1,1,1,0,1,1,0,1],
-                [0,0,1,1,1,0,0,0,1,1,1,0,0,0,1,1,0,0,0,0,1,0,1,0,0,1,1,1,0,0,1],
-                [1,0,0,1,0,1,1,1,0,0,1,1,1,1,0,0,1,1,1,1,0,1,0,1,0,1,1,1,1,0,0],
-                [0,1,0,1,1,1,1,1,1,1,0,1,0,0,1,1,0,0,0,1,0,1,1,1,1,1,0,1,0,1,1],
-                [0,0,0,0,0,0,0,0,1,1,0,1,1,0,1,0,0,1,1,0,0,1,0,1,1,0,1,0,0,1,1],
-                [1,1,1,1,1,1,1,0,1,1,1,0,0,1,1,1,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0],
-                [1,0,0,0,0,0,1,0,0,1,1,0,1,1,0,1,0,1,0,0,1,0,0,1,1,1,1,0,0,1,0],
-                [1,0,1,1,1,0,1,0,1,0,1,0,0,1,0,0,0,0,1,1,0,1,0,0,1,0,1,1,1,1,1],
-                [1,0,1,1,1,0,1,0,0,1,1,1,0,1,1,0,1,0,1,0,1,1,1,1,0,0,1,0,1,0,1],
-                [1,0,1,1,1,0,1,0,1,1,0,0,1,1,1,1,0,0,0,1,1,0,0,1,1,1,1,1,1,0,0],
-                [1,0,0,0,0,0,1,0,0,1,1,0,0,1,0,1,1,0,1,1,0,1,0,1,0,1,0,1,1,1,1],
-                [1,1,1,1,1,1,1,0,1,0,1,1,0,1,1,1,1,0,1,0,0,1,1,1,1,0,0,1,0,0,1]
-            ];
+            const opt = {
+                margin:       10,
+                filename:     'Kingdom_Hotel_Room_Booking_QR.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
 
-            const scale = 10;
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#000000';
-
-            for (let r = 0; r < matrix.length; r++) {
-                for (let c = 0; c < matrix[r].length; c++) {
-                    if (matrix[r][c] === 1) {
-                        ctx.fillRect(c * scale, r * scale, scale, scale);
-                    }
-                }
-            }
-
-            // ባዕሉ ጸኒሑ ቀጥታ ናብ PDF/Print ዝቕይረሉ ዊንዶው ክኸፍት
-            setTimeout(function() {
+            if (typeof html2pdf !== 'undefined') {
+                html2pdf().set(opt).from(element).save();
+            } else {
                 window.print();
-            }, 600);
-        };
+            }
+        }
     </script>
 
 </body>
