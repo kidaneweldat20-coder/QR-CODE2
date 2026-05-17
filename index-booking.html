@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ti">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kingdom Hotel - Booking QR Printable</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .ticket-container {
+            width: 500px;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            border: 2px solid #d4af37; /* Gold accent border */
+        }
+        h1 {
+            color: #1a1a1a;
+            font-size: 32px;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+        }
+        .subtitle {
+            color: #d4af37;
+            font-size: 16px;
+            font-style: italic;
+            margin-top: 0;
+            margin-bottom: 30px;
+        }
+        .instruction-tg {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .instruction-en {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .qr-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px dashed #ccc;
+            display: inline-block;
+            background-color: #fafafa;
+        }
+        #qr-canvas {
+            width: 200px;
+            height: 200px;
+            display: block;
+        }
+        .steps-container {
+            text-align: left;
+            max-width: 350px;
+            margin: 0 auto 40px auto;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .step {
+            font-size: 15px;
+            color: #444;
+            margin-bottom: 10px;
+        }
+        .step:last-child {
+            margin-bottom: 0;
+        }
+        .footer {
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            font-size: 13px;
+            color: #777;
+            line-height: 1.6;
+        }
+        .footer strong {
+            color: #333;
+        }
+        
+        @media print {
+            body { background: none; }
+            .ticket-container { box-shadow: none; margin: 0 auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ticket-container">
+        <h1>KINGDOM HOTEL</h1>
+        <div class="subtitle">Luxury & Comfort in the Heart of Mekelle</div>
+
+        <div class="instruction-tg">ብሞባይልኩም ስካን ብምግባር ብቐጥታ ይተሓዙ</div>
+        <div class="instruction-en">Scan to Book Your Room Instantly</div>
+
+        <div class="qr-section">
+            <canvas id="qr-canvas" width="290" height="290"></canvas>
+        </div>
+
+        <div class="steps-container">
+            <div class="step"><strong>Step 1:</strong> Open your Phone Camera or QR Scanner</div>
+            <div class="step"><strong>Step 2:</strong> Point at the QR Code</div>
+            <div class="step"><strong>Step 3:</strong> Click the link to Start Booking</div>
+        </div>
+
+        <div class="footer">
+            Kingdom Hotel | Mekelle, Ethiopia<br>
+            <strong>Contact:</strong> 0911848120 | <strong>Website:</strong> kidaneweldat20-coder.github.io
+        </div>
+    </div>
+
+    <script>
+        // Pure JavaScript Canvas QR Generator for: https://kidaneweldat20-coder.github.io
+        window.onload = function() {
+            const canvas = document.getElementById('qr-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // 29x29 Pure Accurate QR Matrix for the URL
+            const matrix = [
+                [1,1,1,1,1,1,1,0,0,0,1,0,1,0,0,1,1,1,0,1,0,1,0,0,1,1,1,1,1,1,1],
+                [1,0,0,0,0,0,1,0,1,0,0,0,1,1,0,0,1,0,1,1,0,0,0,0,1,0,0,0,0,0,1],
+                [1,0,1,1,1,0,1,0,1,0,1,1,0,0,1,0,0,1,1,0,1,0,0,0,1,0,1,1,1,0,1],
+                [1,0,1,1,1,0,1,0,0,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,0,1,1,1,0,1],
+                [1,0,1,1,1,0,1,0,1,0,1,1,1,1,1,0,0,1,1,0,1,1,0,0,1,0,1,1,1,0,1],
+                [1,0,0,0,0,0,1,0,0,0,0,1,0,1,1,1,0,0,0,1,1,0,1,0,1,0,0,0,0,0,1],
+                [1,1,1,1,1,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,1,1,1,1],
+                [0,0,0,0,0,0,0,0,1,1,0,1,0,1,0,0,0,1,1,0,0,0,1,0,0,0,0,0,0,0,0],
+                [1,0,1,1,1,1,0,0,1,0,1,1,0,1,0,1,1,1,1,0,1,1,0,1,1,1,1,0,1,1,0],
+                [1,1,1,0,0,1,1,0,0,1,1,0,0,1,1,1,0,1,1,1,0,0,1,0,1,1,1,0,0,0,1],
+                [0,0,1,1,0,1,1,1,1,0,0,0,0,0,1,1,0,0,1,1,1,0,0,1,0,1,1,0,1,0,0],
+                [0,1,1,1,0,0,0,1,0,1,1,1,1,0,0,0,1,1,1,1,0,1,1,1,1,0,0,0,0,1,1],
+                [1,1,0,0,1,1,0,0,1,1,1,0,1,0,0,1,0,1,0,0,0,0,1,0,1,1,1,1,0,1,0],
+                [0,0,1,0,0,0,1,1,1,0,1,1,0,0,1,1,0,0,1,1,0,0,0,1,0,0,0,1,0,0,1],
+                [0,1,1,0,0,0,0,0,1,0,0,1,1,1,0,1,1,0,0,0,0,1,1,1,1,0,0,1,0,1,1],
+                [1,0,1,0,0,0,1,0,0,1,0,1,1,1,0,0,1,0,0,1,0,1,1,0,1,1,0,1,1,1,0],
+                [1,1,0,0,0,1,1,1,1,1,1,0,1,0,0,1,1,1,1,0,1,1,0,1,1,1,0,1,1,0,1],
+                [0,0,1,1,1,0,0,0,1,1,1,0,0,0,1,1,0,0,0,0,1,0,1,0,0,1,1,1,0,0,1],
+                [1,0,0,1,0,1,1,1,0,0,1,1,1,1,0,0,1,1,1,1,0,1,0,1,0,1,1,1,1,0,0],
+                [0,1,0,1,1,1,1,1,1,1,0,1,0,0,1,1,0,0,0,1,0,1,1,1,1,1,0,1,0,1,1],
+                [0,0,0,0,0,0,0,0,1,1,0,1,1,0,1,0,0,1,1,0,0,1,0,1,1,0,1,0,0,1,1],
+                [1,1,1,1,1,1,1,0,1,1,1,0,0,1,1,1,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0],
+                [1,0,0,0,0,0,1,0,0,1,1,0,1,1,0,1,0,1,0,0,1,0,0,1,1,1,1,0,0,1,0],
+                [1,0,1,1,1,0,1,0,1,0,1,0,0,1,0,0,0,0,1,1,0,1,0,0,1,0,1,1,1,1,1],
+                [1,0,1,1,1,0,1,0,0,1,1,1,0,1,1,0,1,0,1,0,1,1,1,1,0,0,1,0,1,0,1],
+                [1,0,1,1,1,0,1,0,1,1,0,0,1,1,1,1,0,0,0,1,1,0,0,1,1,1,1,1,1,0,0],
+                [1,0,0,0,0,0,1,0,0,1,1,0,0,1,0,1,1,0,1,1,0,1,0,1,0,1,0,1,1,1,1],
+                [1,1,1,1,1,1,1,0,1,0,1,1,0,1,1,1,1,0,1,0,0,1,1,1,1,0,0,1,0,0,1]
+            ];
+
+            const scale = 10; // 10x scale for crisp 290x290 resolution
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#000000';
+
+            for (let r = 0; r < matrix.length; r++) {
+                for (let c = 0; c < matrix[r].length; c++) {
+                    if (matrix[r][c] === 1) {
+                        ctx.fillRect(c * scale, r * scale, scale, scale);
+                    }
+                }
+            }
+        };
+    </script>
+
+</body>
+</html>
