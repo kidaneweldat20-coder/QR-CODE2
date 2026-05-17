@@ -7,7 +7,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght=500;700&family=Noto+Ethiopic:wght=400;700&display=swap" rel="stylesheet">
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
     <style>
         /* Luxury Royal Theme for Kingdom Hotel */
         body {
@@ -60,7 +63,6 @@
             box-sizing: border-box;
         }
 
-        /* Luxury Inner Border Accent */
         .booking-card::before {
             content: '';
             position: absolute;
@@ -100,7 +102,7 @@
             font-weight: 500;
         }
 
-        /* ጽሩይ ንድፊ ዘለዎ ጻዕዳ ናይ QR መትሓዚ */
+        /* ጻዕዳ ናይ QR መትሓዚ */
         .qr-wrapper {
             background-color: #ffffff;
             padding: 20px;
@@ -111,10 +113,12 @@
             margin-bottom: 15px;
         }
 
-        .qr-wrapper img {
+        /* እቲ QR ጀነሬተር ባዕሉ ጽፉፍ ንክገብሮ */
+        #qrcode img {
             width: 240px;
             height: 240px;
             display: block;
+            margin: 0 auto;
         }
 
         /* Instructions Steps */
@@ -148,7 +152,6 @@
             color: #b0a080;
         }
 
-        /* Print configuration */
         @media print {
             body { padding: 0; background: none; }
             .action-container { display: none; }
@@ -170,7 +173,7 @@
         <p class="call-to-action-en">Scan to Book Your Room Instantly</p>
         
         <div class="qr-wrapper">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https%3A%2F%2Fkidaneweldat20-coder.github.io&color=000000&bgcolor=FFFFFF" alt="Kingdom Hotel Booking QR">
+            <div id="qrcode"></div>
         </div>
         
         <div class="steps-container">
@@ -186,6 +189,18 @@
     </div>
 
     <script>
+        // ገጹ ምስ ጻዓነ 100% ጽሩይ ንድፊ ዘለዎ QR Code ባዕሉ ይፈጥር
+        window.onload = function() {
+            new QRCode(document.getElementById("qrcode"), {
+                text: "https://kidaneweldat20-coder.github.io",
+                width: 240,
+                height: 240,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        };
+
         // PDF ዳውንሎድ ዝገብር ንጹር ፈንክሽን
         function downloadPDF() {
             const element = document.getElementById('ticket');
@@ -194,15 +209,13 @@
                 margin:       10,
                 filename:     'Kingdom_Hotel_Room_Booking_QR.pdf',
                 image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true },
+                html2canvas:  { scale: 2, logging: false, useCORS: true },
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
-            // html2pdf ተጠቒሙ የውርዶ
             if (typeof html2pdf !== 'undefined') {
                 html2pdf().set(opt).from(element).save();
             } else {
-                // መማረጺ window.print
                 window.print();
             }
         }
